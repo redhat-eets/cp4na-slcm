@@ -1,0 +1,68 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ztp-vcu-policies
+    labels:
+  name: ztp-vcu-policies
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  creationTimestamp: null
+  name: ztp-vcu-common
+  labels:
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ztp-du-policies
+    labels:
+  name: ztp-du-policies
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  creationTimestamp: null
+  name: ztp-du-common
+  labels:
+--- 
+apiVersion: v1
+kind: Namespace
+metadata:
+  creationTimestamp: null
+  name: ztp-nokia-vcu-policies
+  labels:
+    name: ztp-nokia-vcu-policies
+--- 
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ztp-policies
+  labels:
+    name: ztp-policies
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  creationTimestamp: null
+  name: ztp-common
+  #labels:
+  # name: common
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  creationTimestamp: null
+  name: ztp-group-vcu
+  labels:
+    name: ztp-group-vcu
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  creationTimestamp: null
+  name: ztp-du-policies
+  labels:
+    name: ztp-vcu-policies
+

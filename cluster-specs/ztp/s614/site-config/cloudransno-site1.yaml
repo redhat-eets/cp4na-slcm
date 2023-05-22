@@ -1,0 +1,71 @@
+# test-sno-bmh-secret & assisted-deployment-pull-secret need to be created under same namespace test-sno
+apiVersion: ran.openshift.io/v1
+kind: SiteConfig
+metadata:
+  name: "cloudransno-site1"
+  namespace: "cloudransno-site1"
+spec:
+  baseDomain: "nokia.bos2.lab"
+  pullSecretRef:
+    name: "assisted-deployment-pull-secret"
+  clusterImageSetNameRef: img4.12.10-x86-64-appsub
+  sshPublicKey: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDncNgRHs7yHZ+7pkUXBvMEXX/VM9I6Ix/LJVxfsVXuKWmc//uVV5A1WJLenbL57s8OUtUWWO2pPDs9hi5R2QuVLd+uD2plxc56tMDdl4NI83g7kaIRaY2ejOFSDOKT3Zd1hrIg4zw5zOHSRa1KzTc/lOKatktaDHrT42fyhhl3ourkZDXF9wW+zK4EypPCh6NJkyYsRIAGqUC+xH+IN0zxI71oXD4OQCD+2UbdSeGGYGg/9eYFhO9vQFveKKtWQzpfaDB0RevLfne71OLFd2BHrIFpMF4xe0a+P34TnWmqEI/0Ywa7i52vvoKMQXYujYKInQ+e7SOh/8kFfLKNFR/37wj2XxFCBdOXtcZOWiNtsJPzbruCxM3k33Cvo2lv7XqaVx+0PsLjvCIK8xwEs0YNeonmBULzDpz9fLVgKdSjmh6snCv5/Vo8IFHb/4sbwtNaP9cuPJbjs1XorR27K1JGVMd0YAvWmXxV7BvwWQBAZU46vXc76kmGlAesIRLR+aM= kni@infra1"
+  clusters:
+  - clusterName: "cloudransno-site1"
+    clusterType: "sno"
+    clusterProfile: "du"
+    clusterLabels:
+      group-du-sno: ""
+      common: "4.12"
+      sites : "du"
+      sno: "true"
+      forceSync: "2"
+    clusterNetwork:
+      - cidr: 10.254.0.0/16
+        hostPrefix: 23
+    machineNetwork:
+      - cidr: 192.168.44.0/25
+    serviceNetwork:
+      - 172.31.0.0/16
+    additionalNTPSources:
+      - pool.ntp.org
+    numMasters: 1
+    nodes:
+      - hostName: "cloudransno-site1"
+        role: "master"
+        bmcAddress: "idrac-virtualmedia://192.168.44.160/redfish/v1/Systems/System.Embedded.1"
+        bmcCredentialsName:
+          name: "cloudransno-site1-bmc-secret"
+        bootMACAddress: "40:A6:B7:7B:97:24"
+        bootMode: "UEFI"
+        cpuset: "0-1,28-29"
+        rootDeviceHints:
+          deviceName: /dev/sda
+        #  hctl: "1:2:0:0"
+        nodeNetwork:
+          config:
+            interfaces:
+              - name: enp84s0
+                macAddress: "40:A6:B7:7B:97:24"
+                type: ethernet
+                state: up
+                ipv4:
+                  enabled: true
+                  address:
+                    - ip: 192.168.44.60
+                      prefix-length: 25
+            routes:
+              config:
+              - destination: 0.0.0.0/0
+                next-hop-address: 192.168.44.1
+                next-hop-interface: enp84s0
+                table-id: 254
+            dns-resolver:
+              config:
+                search:
+                - cloudranmgmt.nokia.bos2.lab
+                server:
+                - 192.168.44.53
+          interfaces:
+            - name: enp84s0
+              macAddress: "40:A6:B7:7B:97:24"

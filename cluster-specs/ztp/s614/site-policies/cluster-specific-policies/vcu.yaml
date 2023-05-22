@@ -1,0 +1,326 @@
+apiVersion: ran.openshift.io/v1
+kind: PolicyGenTemplate
+metadata:
+  name: vcu
+  namespace: ztp-policies
+spec:
+  bindingRules:
+    name: vcu-4.12
+  mcp: master
+  sourceFiles:
+
+################################################ F1 ####################################################
+
+    - fileName: SriovNetworkNodePolicy.yaml
+      policyName: "pci-sriov-net-f1"
+      complianceType: 'mustonlyhave'
+      metadata:
+        name: "pci-sriov-net-f1"
+        namespace: openshift-sriov-network-operator
+      spec:
+        deviceType: netdevice
+        mtu: 1500
+        isRdma: false
+        nicSelector:
+          deviceID: 159b
+          pfNames:
+          - eno12409#0-3
+          vendor: "8086"
+        numVfs: 8
+        priority: 90
+        resourceName: pci_sriov_net_f1
+
+    - fileName: SriovNetwork.yaml
+      policyName: "networking-f1u"
+      complianceType: 'mustonlyhave'
+      metadata:
+        name: "networking-f1u"
+        namespace: openshift-sriov-network-operator
+      spec:
+        ipam: |-
+          {
+            "type": "static",
+          }
+        vlan: 131
+        resourceName: pci_sriov_net_f1
+        networkNamespace: test
+        spoofChk: "off"
+        trust: "on"
+
+    - fileName: SriovNetwork.yaml
+      policyName: "networking-f1c"
+      complianceType: 'mustonlyhave'
+      metadata:
+        name: "networking-f1c"
+        namespace: openshift-sriov-network-operator
+      spec:
+        ipam: |-
+          {
+            "type": "static",
+          }
+        vlan: 132
+        resourceName: pci_sriov_net_f1
+        networkNamespace: test
+        spoofChk: "off"
+        trust: "on"
+
+################################################ LLSCU ####################################################
+
+    - fileName: SriovNetworkNodePolicy.yaml
+      policyName: "pci-sriov-net-llscu"
+      complianceType: 'mustonlyhave'
+      metadata:
+        name: "pci-sriov-net-llscu"
+        namespace: openshift-sriov-network-operator
+      spec:
+        deviceType: vfio-pci
+        mtu: 1500
+        isRdma: false
+        nicSelector:
+          deviceID: 159b
+          pfNames:
+          - eno12409#4-7
+          vendor: "8086"
+        numVfs: 8
+        priority: 91
+        resourceName: pci_sriov_net_llscu
+
+    - fileName: SriovNetwork.yaml
+      policyName: "networking-llscu"
+      complianceType: 'mustonlyhave'
+      metadata:
+        name: "networking-llscu"
+        namespace: openshift-sriov-network-operator
+      spec:
+        ipam: |-
+          {
+            "type": "static",
+          }
+        vlan: 133
+        resourceName: pci_sriov_net_llscu
+        networkNamespace: test
+        spoofChk: "off"
+        trust: "on"
+
+################################################ LLSCM ####################################################
+
+    - fileName: SriovNetworkNodePolicy.yaml
+      policyName: "pci-sriov-net-llscm"
+      complianceType: 'mustonlyhave'
+      metadata:
+        name: "pci-sriov-net-llscm"
+        namespace: openshift-sriov-network-operator
+      spec:
+        deviceType: netdevice
+        mtu: 1500
+        isRdma: false
+        nicSelector:
+          deviceID: 159b
+          pfNames:
+          - eno12399#0-2
+          vendor: "8086"
+        numVfs: 8
+        priority: 92
+        resourceName: pci_sriov_net_llscm
+
+    - fileName: SriovNetwork.yaml
+      policyName: "networking-llscm"
+      complianceType: 'mustonlyhave'
+      metadata:
+        name: "networking-llscm"
+        namespace: openshift-sriov-network-operator
+      spec:
+        ipam: |-
+          {
+            "type": "static",
+          }
+        vlan: 134
+        resourceName: pci_sriov_net_llscm
+        networkNamespace: test
+        spoofChk: "off"
+        trust: "on"
+
+################################################ E5L ####################################################
+
+    - fileName: SriovNetworkNodePolicy.yaml
+      policyName: "pci-sriov-net-e5l"
+      complianceType: 'mustonlyhave'
+      metadata:
+        name: "pci-sriov-net-e5l"
+        namespace: openshift-sriov-network-operator
+      spec:
+        deviceType: vfio-pci
+        mtu: 1500
+        isRdma: false
+        nicSelector:
+          deviceID: 159b
+          pfNames:
+          - eno12399#3-4
+          vendor: "8086"
+        numVfs: 8
+        priority: 93
+        resourceName: pci_sriov_net_e5l
+    - fileName: SriovNetwork.yaml
+      policyName: "networking-e5l"
+      complianceType: 'mustonlyhave'
+      metadata:
+        name: "networking-e5l"
+        namespace: openshift-sriov-network-operator
+      spec:
+        ipam: |-
+          {
+            "type": "static",
+          }
+        vlan: 135
+        resourceName: pci_sriov_net_e5l
+        networkNamespace: test
+        spoofChk: "off"
+        trust: "on"
+
+################################################ FGCI ####################################################
+
+    - fileName: SriovNetworkNodePolicy.yaml
+      policyName: "pci-sriov-net-fgci"
+      complianceType: 'mustonlyhave'
+      metadata:
+        name: "pci-sriov-net-fgci"
+        namespace: openshift-sriov-network-operator
+      spec:
+        deviceType: netdevice
+        mtu: 1500
+        isRdma: false
+        nicSelector:
+          deviceID: 159b
+          pfNames:
+          - eno12399#5-6
+          vendor: "8086"
+        numVfs: 8
+        priority: 94
+        resourceName: pci_sriov_net_fgci
+    - fileName: SriovNetwork.yaml
+      policyName: "networking-fgci"
+      complianceType: 'mustonlyhave'
+      metadata:
+        name: "networking-fgci"
+        namespace: openshift-sriov-network-operator
+      spec:
+        ipam: |-
+          {
+            "type": "static",
+          }
+        vlan: 136
+        resourceName: pci_sriov_net_fgci
+        networkNamespace: test
+        spoofChk: "off"
+        trust: "on"
+
+################################################ OAM ####################################################
+
+    - fileName: SriovNetworkNodePolicy.yaml
+      policyName: "pci-sriov-net-oam"
+      complianceType: 'mustonlyhave'
+      metadata:
+        name: "pci-sriov-net-oam"
+        namespace: openshift-sriov-network-operator
+      spec:
+        deviceType: netdevice
+        mtu: 1500
+        isRdma: false
+        nicSelector:
+          deviceID: 159b
+          pfNames:
+          - eno12399#7-7
+          vendor: "8086"
+        numVfs: 8
+        priority: 95
+        resourceName: pci_sriov_net_oam
+    - fileName: SriovNetwork.yaml
+      policyName: "networking-oam"
+      complianceType: 'mustonlyhave'
+      metadata:
+        name: "networking-oam"
+        namespace: openshift-sriov-network-operator
+      spec:
+        ipam: |-
+          {
+            "type": "static",
+          }
+        vlan: 137
+        resourceName: pci_sriov_net_oam
+        networkNamespace: test
+        spoofChk: "off"
+        trust: "on"
+
+################################################ PAO ####################################################
+
+    - fileName: PerformanceProfile.yaml
+      policyName: perfprofile-policy
+      complianceType: 'mustonlyhave'
+      metadata:
+        name: sno-perfprofile
+      spec:
+        additionalKernelArgs:
+        - "firmware_class.path=/var/lib/firmware/"
+        - "idle=poll"
+        - "nohz_full=2-27,30-55"
+        - "rcupdate.rcu_normal_after_boot=0"
+        - "efi=runtime"
+        - "intel_idle.max_cstate=0"
+        - "intel_pstate=disable"
+        - "numa_balancing=disable"
+        cpu:
+          isolated: 2-27,30-55
+          reserved: 0-1,28-29
+        hugepages:
+          defaultHugepagesSize: 1G
+          pages:
+          - count: 8
+            size: 1G
+            node: 0
+        machineConfigPoolSelector:
+          pools.operator.machineconfiguration.openshift.io/master: ""
+        net:
+          userLevelNetworking: true
+        nodeSelector:
+          node-role.kubernetes.io/master: ""
+        numa:
+          topologyPolicy: restricted
+        realTimeKernel:
+          enabled: true 
+
+##################PTPCONFIG###########################################################################
+#
+#    - fileName: MachineConfigDisableChronyd.yaml
+#      policyName: "mc-chronyd-policy"
+    - fileName: PtpConfigSlaveCvl.yaml
+      policyName: "ptp-config-policy"
+      metadata:
+        name: "du-slave"
+      spec:
+        profile:
+        - name: "slave"
+          interface: "eno12409"
+          ptp4lOpts: "-2 -s"
+          phc2sysOpts: "-a -r -n 24 -u 2"
+          #ptpSchedulingPolicy: "SCHED_FIFO"
+          #ptpSchedulingPriority: 10
+    - fileName: TunedPerformancePatch.yaml
+      policyName: "tuned-perf-patch-policy"
+      complianceType: 'mustonlyhave'
+      spec:
+        profile:
+          - name: performance-patch
+            data: |
+              [main]
+              summary=Configuration changes profile inherited from performance created tuned
+              include=openshift-node-performance-sno-perfprofile
+              [bootloader]
+              cmdline_crash=nohz_full=2-27,30-55
+              [sysctl]
+              kernel.timer_migration=1
+              [scheduler]
+              group.ice-ptp=0:f:10:*:ice-ptp.*
+              [service]
+              service.stalld=start,enable
+              service.chronyd=stop,disable
+

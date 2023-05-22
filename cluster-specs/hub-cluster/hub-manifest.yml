@@ -1,0 +1,73 @@
+
+## General vars
+
+debug_mode: $DEBUG_MODE # Set it to true or false
+repo_dir: $PATH_TO_REPO # Full path to repository
+
+
+## MGMT cluster vars ##
+test_running_dir: "/home/kni/nokia-cloud-ran-slcm"
+kubeconfig_mgmt_cluster: "$PATH_TO_HUB_KUBECONFIG"
+
+## Telco QE vars ##
+ocp_auto_edge_repo_dir: "$OCP_AUTO_EDGE_REPO_PATH"
+
+## ACM vars ##
+acm_version: "2.7"
+acm_channel: "release-2.7"
+
+## GitOps Vars ##
+ztp_deploy_virtualmedia: false
+gitops_version: "$GITOPS_VERSION"
+
+osimages_ocp_version_410: "4.10"
+osimages_version_410: "410.84.202201251210-0"
+osimages_url_410: "https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/4.10/4.10.3/rhcos-4.10.3-x86_64-live.x86_64.iso"
+osimages_rootfsurl_410: "https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/4.10/4.10.3/rhcos-live-rootfs.x86_64.img"
+
+osimages_ocp_version_411: "4.11"
+osimages_version_411: "411.86.202207150124-0"
+osimages_url_411: "https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/4.11/4.11.2/rhcos-live.x86_64.iso"
+osimages_rootfsurl_411: "https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/4.11/4.11.2/rhcos-live-rootfs.x86_64.img"
+
+osimages_ocp_version_412: "4.12"
+osimages_version_412: "412.86.202207150124-0"
+osimages_url_412: "https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/4.12/4.12.2/rhcos-live.x86_64.iso"
+osimages_rootfsurl_412: "https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/4.12/4.12.2/rhcos-live-rootfs.x86_64.img"
+
+osimages_ocp_version_413: "4.13"
+osimages_version_413: "413.86.202207150124-0"
+osimages_url_413: "http://infra6:8080/rhcos-413.92.202303011445-0-live.x86_64.img"
+osimages_rootfsurl_413: "http://infra6:8080/rhcos-413.92.202303011445-0-live-rootfs.x86_64.img"
+## ZTP test vars ##
+ztp_deploy_virtualmedia: false
+
+### ZTP 001 vars ###
+ztp_gitops_repo: "ssh://git@gitlab.consulting.redhat.com:2222/telco-solutions/nokia-cloud-ran-slcm.git"
+#ztp_site_generator_image: "infra6:5500"
+ztp_site_generator_image: "quay.io/openshift-kni/ztp-site-generator"
+
+ztp_site_path: "$STAMP" # This should be the path to ztp-gitops repo testbed 
+gitlab_src_ztp_branch: "$ZTP_SRC_BRANCH" # This should be "dev" as soon as ZTP-GitOps is ready for it
+gitlab_dst_ztp_branch: "deploy_undeploy" # This is the resulting branch name + {{ ztp_site_path }}
+gitlab_key_path: "/var/lib/dci-openshift-app-agent/.ssh/id_rsa_kni" # Change it to a configured SSH in ZTP GitOps Repository.
+
+cluster_credentials_path: "/tmp/cluster-auth" # Path were ssh keys of the deployed node will be stored
+
+# If ztp_ocp_last_ver is True, then we will install the latest version of OCP
+# if false, it will install 5 versions older from the latest
+ztp_ocp_last_ver: false
+sites_list: [$ZTP_SITES_LIST] #i.e ["cloudransno-site1", "cloudransno-site2", "cloudransno-site3", "cloudransno-site4", "cloudransno-site5", "cloudransno-site6"]
+ocp_target_version: $OCP_TARGET_VERSION # i.e "4.10.40"
+ocp_channel: $OCP_VERSION # or "4.12"
+
+# ZTP 002 UNDEPLOY
+deleted_sites_list: [$ZTP_DELETE_SITES_LIST] #i.e ["cloudransno-site1", "cloudransno-site2", "cloudransno-site3", "cloudransno-site4", "cloudransno-site5", "cloudransno-site6"]
+
+### ZTP 003 UPDATE SNO
+# This is the target version for OCP upgrade used by TALM
+#ztp_target_upgrade: "4.10.21"
+edu_cgu_policies: 
+  - "upgrades-4-10-cluster-version-policy"
+cgu_sites_list: [$ZTP_SITES_LIST]
+

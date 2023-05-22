@@ -1,0 +1,12 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+generators:
+
+### SNOs
+
+
+### VCUs
+#- dualstack-vcu.yaml
+- cloudransno-site1.yaml
+- cloudransno-site2.yaml

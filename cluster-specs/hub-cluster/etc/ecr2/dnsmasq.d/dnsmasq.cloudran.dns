@@ -1,0 +1,133 @@
+domain-needed
+#bind-dynamic
+bogus-priv
+domain=ecr2.bos2.lab
+domain=ecr3.bos2.lab,192.168.33.58,192.168.33.59,192.168.33.35,192.168.33.34,192.168.33.36
+listen-address=127.0.0.1,192.168.33.40
+expand-hosts
+
+#strict-order
+#dhcp-authoritative
+#dhcp-fqdn
+#log-queries
+#log-dhcp
+
+#server=192.168.254.21
+#server=192.168.254.20
+server=1.1.1.1
+server=8.8.8.8
+server=192.168.33.40
+
+dhcp-range=192.168.33.55,192.168.33.126
+dhcp-option= option:netmask,255.255.255.128
+dhcp-option= option:router,192.168.33.1
+dhcp-option= option:dns-server,192.168.33.40
+dhcp-option= option:domain-search,cloudranmgmt.ecr2.bos2.lab
+dhcp-option= option:domain-search,cloudranmgmt.ecr3.bos2.lab
+
+dhcp-range= tag:cloudran,192.168.33.41,192.168.33.50
+#dhcp-range=10.0.1.4,10.0.14
+dhcp-option= tag:cloudran,option:netmask,255.255.255.128
+dhcp-option= tag:cloudran,option:router,192.168.33.1
+dhcp-option= tag:cloudran,option:dns-server,192.168.33.40
+dhcp-option= tag:cloudran,option:domain-search,cloudranmgmt.ecr2.bos2.lab
+dhcp-option= tag:cloudran,option:domain-search,cloudranmgmt.ecr3.bos2.lab
+
+
+#dhcp-option=3,<baremetal-net-gateway-ip>
+#dhcp-option=3,10.0.1.254
+#resolv-file=/etc/resolv.conf.upstream
+interface=baremetal
+#interface=em2
+
+# MGMT CLUSTER
+
+## Wildcard MGMT cluster: apps and other api domains
+address=/.apps.cloudranmgmt.ecr2.bos2.lab/192.168.33.49
+address=/api.cloudranmgmt.ecr2.bos2.lab/192.168.33.48
+address=/api-int.cloudranmgmt.ecr2.bos2.lab/192.168.33.48
+
+## Static IPs for Masters
+### master-0
+dhcp-host=B4:96:91:B4:C2:C5,192.168.33.41,master-0.cloudranmgmt.ecr2.bos2.lab, set:cloudran
+address=/master-0.cloudranmgmt.ecr2.bos2.lab/192.168.33.41
+ptr-record=41.33.168.192.in-addr.arpa,master-0.cloudranmgmt.ecr2.bos2.lab
+
+### master-1
+dhcp-host=B4:96:91:BA:1C:09,192.168.33.42,master-1.cloudranmgmt.ecr2.bos2.lab, set:cloudran
+address=/master-1.cloudranmgmt.ecr2.bos2.lab/192.168.33.42
+ptr-record=42.33.168.192.in-addr.arpa,master-1.cloudranmgmt.ecr2.bos2.lab
+
+### master-2
+dhcp-host=B4:96:91:B4:C1:25,192.168.33.43,master-2.cloudranmgmt.ecr2.bos2.lab, set:cloudran
+address=/master-2.cloudranmgmt.ecr2.bos2.lab/192.168.33.43
+ptr-record=43.33.168.192.in-addr.arpa,master-2.cloudranmgmt.ecr2.bos2.lab
+
+
+# port 
+
+#33.33
+#Wildcard for apps and other api domains
+address=/.apps.cloudranmgmt.ecr3.bos2.lab/192.168.33.59
+address=/api.cloudranmgmt.ecr3.bos2.lab/192.168.33.58
+address=/api-int.cloudranmgmt.ecr3.bos2.lab/192.168.33.58
+
+
+# Static IPs for Masters
+# master-0
+dhcp-host=B4:96:91:BA:1A:F1,192.168.33.34,master-10.cloudranmgmt.ecr3.bos2.lab, set:cloudran
+address=/master-10.cloudranmgmt.ecr3.bos2.lab/192.168.33.34
+ptr-record=34.33.168.192.in-addr.arpa,master-10.cloudranmgmt.ecr3.bos2.lab
+
+# master-11
+dhcp-host=B4:96:91:BA:17:01,192.168.33.35,master-11.cloudranmgmt.ecr3.bos2.lab, set:cloudran
+address=/master-11.cloudranmgmt.ecr3.bos2.lab/192.168.33.35
+ptr-record=35.33.168.192.in-addr.arpa,master-11.cloudranmgmt.ecr3.bos2.lab
+
+# master-12
+dhcp-host=B4:96:91:BA:B6:11,192.168.33.36,master-12.cloudranmgmt.ecr3.bos2.lab, set:cloudran
+address=/master-12.cloudranmgmt.ecr3.bos2.lab/192.168.33.36
+ptr-record=36.33.168.192.in-addr.arpa,master-12.cloudranmgmt.ecr3.bos2.lab
+
+
+
+## Wildcard SNO2-231 cluster: apps and other api domains
+address=/apps.cloudransno-site2.ecr3.bos2.lab/192.168.33.31
+address=/api.cloudransno-site2.ecr3.bos2.lab/192.168.33.31
+address=/api-int.cloudransno-site2.ecr3.bos2.lab/192.168.33.31
+
+### STATIC DHCP assignation
+dhcp-host=B4:96:91:BA:47:B5,192.168.33.31,cloudransno-site2.ecr3.bos2.lab
+#address=/cloudransno-site2.ecr3.bos2.lab/192.168.33.31
+ptr-record=31.33.168.192.in-addr.arpa,cloudransno-site2.ecr3.bos2.lab
+
+##end of 33.33
+
+
+
+
+# SNO/ZTP CLUSTERS
+
+## Wildcard SNO1-230 cluster: apps and other api domains
+address=/apps.cloudransno-site1.ecr2.bos2.lab/192.168.33.30
+address=/api.cloudransno-site1.ecr2.bos2.lab/192.168.33.30
+address=/api-int.cloudransno-site1.ecr2.bos2.lab/192.168.33.30
+
+
+### STATIC DHCP assignation
+dhcp-host=B4:96:91:BA:AC:11,192.168.33.30,cloudransno-site1.ecr2.bos2.lab
+#address=/cloudransno-site1.ecr2.bos2.lab/192.168.33.30
+ptr-record=30.33.168.192.in-addr.arpa,cloudransno-site1.ecr2.bos2.lab
+
+
+## Wildcard SNO3-232 cluster: apps and other api domains
+address=/.apps.cloudransno-site3.ecr2.bos2.lab/192.168.33.32
+address=/api.cloudransno-site3.ecr2.bos2.lab/192.168.33.32
+address=/api-int.cloudransno-site3.ecr2.bos2.lab/192.168.33.32
+
+### STATIC DHCP assignation
+dhcp-host=B4:96:91:BA:B0:95,192.168.33.32,cloudransno-site3.ecr2.bos2.lab, set:cloudran
+#address=/cloudransno-site3.ecr2.bos2.lab/192.168.33.32
+ptr-record=32.33.168.192.in-addr.arpa,cloudransno-site3.ecr2.bos2.lab
+
+

@@ -1,0 +1,65 @@
+## EDU deployment
+setup_edu_ansible_verification: false
+
+## Stability ##
+sno_stability_timelasting: "$SNO_STABILITY_TIME" # Set it to quick_debug, 1_hour, 2_hours or 8_hours
+sno_stability_workload_mode: "$SNO_STABILITY_WORKLOAD" # Set it to no_workload, with_workload or both
+
+stability_test_duration: "$SNO_STABILITY_TIME_SECONDS" # time in seconds like 3600, 7200, etc
+
+
+## Traffic injection
+spirent_ports: ["$SPIRENT_PORT"]
+
+## Latency vars ##
+worker_node: "{{ edu_hostname }}"
+
+## ZTP test vars ##
+
+### ZTP 003 sno Minnor update
+ztp_target_upgrade: "4.10.45"
+ocp_hub_channel: "fast-4.10"
+
+### ZTP 004 PAO config ###
+page_count: 64
+
+## Log collection
+adm_must_gather_image_stream: openshift/must-gather
+adm_must_gather_image: registry.redhat.io/openshift4/ose-sriov-operator-must-gather
+
+## eDU Workload details
+
+edu_static_pvcs : [
+    "backup-data-0",
+    "datadir-data-0",
+    "datadir-data-1",
+    "datadir-data-2",
+    "datadir-data-3",
+    "datadir-data-4",
+    "datadir-data-5",
+    "datadir-data-6",
+    "datadir-data-7",
+    "datadir-data-8",
+    "datadir-data-9",
+    "datadir-data-10",
+]
+
+edu_num_pvs: 26
+edu_expected_bound_pvs: 21
+
+edu_num_pods: 60
+edu_namespace: "test"
+
+edu_sriov_pods: ["test30-deployment", "test32-deployment", "test39-deployment", "test40-deployment"]
+
+edu_sriov_networks_name: [
+    "test/networking-f1u", 
+    "test/networking-f1c",
+    "test/networking-llscu",
+    "test/networking-llscm",
+    "test/networking-e5l",
+    "test/networking-fgci",
+    "test/networking-oam" 
+]
+
+networking_vlan_base: "{{ hostvars[edu_hostname]['du_vlan'] }}"

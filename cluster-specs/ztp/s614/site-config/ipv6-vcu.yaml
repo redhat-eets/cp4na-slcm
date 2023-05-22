@@ -1,0 +1,234 @@
+---
+apiVersion: ran.openshift.io/v1
+kind: SiteConfig
+metadata:
+  name: "vcu"
+  namespace: "vcu"
+spec:
+  baseDomain: "nokia.bos2.lab"
+  pullSecretRef:
+    name: "assisted-deployment-pull-secret"
+  clusterImageSetNameRef: img4.12.10-x86-64-appsub
+  sshPublicKey: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDdPYusSbiJOHbojMtDT3xAqD3MN48c4y/h479Av0W8C8YxNs1Dygq/nuBaxK5pV+3DP026ewHCddEO7Puyur29zrviDIElgimFRds78GGSgGgc3FiuKkbJtE5VLtDYiwWfh2HLwHdb3gkG7xybEWJcKU5yRnoFD46x9DS5I31ZpfOFYGhQCDGus+C6FvgHT4Rr8qqjxkH2JYfQE6hGCoQXh12SJVt+HQAfuiPTg/k9a1d4Bto35/vU8xG/bYGb/xWHzXKus5qEs9+Yg9aipFwmfJRLS86/+KTko8xzyZMewWdhsLR3WizoS1m/u/pFbEwPKIkoKZFrh2ZSkSAEgmIeq8U36plQVTfrozsNoZWV3R9U9JVXQOY5p1kP0K3Ee5ie9uquEBOcG+F6uR2DRNwfG8U14TthnQQtLeHA/gMhr2IQ1kAoO9eDhgjv7sk4UesiybvefNayp+SmG2IAjvl//2PIKmLYHl59zdbICLh6xacaYt/jN5QYK7eXZRrRmc8= kni@infra6"
+  clusters:
+  - clusterName: "vcu"
+    networkType: "OVNKubernetes"
+    clusterProfile: "vcu"
+    clusterLabels:
+      group-vcu: ""
+      common: true
+      sites : "vcu"
+    clusterNetwork:
+      - cidr: fd02::/48
+        hostPrefix: 64
+   machineNetwork:
+      - cidr: 2001:db8:44::/64
+    serviceNetwork:
+      - fd03::/112
+    additionalNTPSources:
+      - pool.ntp.org
+    apiVIP: 2001:db8:44::66/64
+    ingressVIP: 2001:db8:44::67/64
+#    numMasters: 3
+    nodes:
+
+      - hostName: master1.vcu.nokia.bos2.lab
+        role: "master"
+        bmcAddress: "idrac-redfish+https://192.168.44.154/redfish/v1/Systems/System.Embedded.1"
+        bmcCredentialsName:
+          name: "vcu-master1-bmc-secret"
+          bootMACAddress: "10:70:FD:A4:51:A5"
+        bootMode: "UEFI"
+        rootDeviceHints:
+                #          hctl: "1:2:0:0"
+          deviceName: /dev/sda
+#        cpuset: "0,24,1,25,2,26,3,27"
+        nodeNetwork:
+          config:
+            interfaces:
+              - name: eno4
+                macAddress: "10:70:FD:A4:51:A5"
+                type: ethernet
+                state: up
+                ipv4:
+                  enabled: false
+                  dhcp: false
+                ipv6:
+                  enabled: true
+                  address:
+                    - ip: 2001:db8:44::54
+                      prefix-length: 64
+                  dhcp: false
+            routes:
+              config:
+              - destination: [::/0]
+                next-hop-address: [2001:db8:44::1]
+                next-hop-interface: eno4
+              config:
+                search:
+                - vcu.nokia.bos2.lab
+                server:
+                - 2001:db8:44::53
+
+
+      - hostName: master2.vcu.nokia.bos2.lab
+        role: "master"
+        bmcAddress: "idrac-redfish+https://192.168.44.155/redfish/v1/Systems/System.Embedded.1"
+        bmcCredentialsName:
+          name: "vcu-master2-bmc-secret"
+          bootMACAddress: "10:70:FD:A4:51:B7"
+        bootMode: "UEFI"
+        rootDeviceHints:
+          #hctl: "1:2:0:0"
+          deviceName: /dev/sda
+#        cpuset: "0,24,1,25,2,26,3,27"
+        nodeNetwork:
+          config:
+            interfaces:
+              - name: eno4
+                macAddress: "10:70:FD:A4:51:B7"
+                type: ethernet
+                state: up
+                ipv4:
+                  enabled: false
+                  dhcp: false
+                ipv6:
+                  enabled: true
+                  address:
+                    - ip: 2001:db8:44::55
+                      prefix-length: 64
+                  dhcp: false
+            routes:
+              config:
+              - destination: [::/0]
+                next-hop-address: [2001:db8:44::1]
+                next-hop-interface: eno4
+                table-id: 254
+            dns-resolver:
+              config:
+                search:
+                - vcu.nokia.bos2.lab
+                server:
+                - 2001:db8:44::53
+
+
+      - hostName: master3.vcu.nokia.bos2.lab
+        role: "master"
+        bmcAddress: "idrac-redfish+https://192.168.44.156/redfish/v1/Systems/System.Embedded.1"
+        bmcCredentialsName:
+          name: "vcu-master3-bmc-secret"
+          bootMACAddress: "10:70:FD:A4:50:D9"
+        bootMode: "UEFI"
+        rootDeviceHints:
+          #hctl: "1:2:0:0"
+          deviceName: /dev/sdb
+#        cpuset: "0,24,1,25,2,26,3,27"
+        nodeNetwork:
+          config:
+            interfaces:
+              - name: eno4
+                macAddress: "10:70:FD:A4:50:D9"
+                type: ethernet
+                state: up
+                ipv4:
+                  enabled: false
+                  dhcp: false
+                ipv6:
+                  enabled: true
+                  address:
+                    - ip: 2001:db8:44::56
+                      prefix-length: 64
+                  dhcp: false
+            routes:
+              config:
+              - destination: [::/0]
+                next-hop-address: [2001:db8:44::1]
+                next-hop-interface: eno4
+                table-id: 254
+            dns-resolver:
+              config:
+                search:
+                - vcu.nokia.bos2.lab
+                server:
+                - 2001:db8:44::53
+
+
+      - hostName: worker1.vcu.nokia.bos2.lab
+        role: "worker"
+        bmcAddress: "idrac-redfish+https://192.168.44.157/redfish/v1/Systems/System.Embedded.1"
+        bmcCredentialsName:
+          name: "vcu-worker1-bmc-secret"
+          bootMACAddress: "10:70:FD:A4:50:D3"
+        bootMode: "UEFI"
+        rootDeviceHints:
+          #hctl: "1:2:0:0"
+          deviceName: /dev/sda
+#        cpuset: "0,24,1,25,2,26,3,27"
+        nodeNetwork:
+          config:
+            interfaces:
+              - name: eno4
+                macAddress: "10:70:FD:A4:50:D3"
+                type: ethernet
+                state: up
+                ipv4:
+                  enabled: false
+                  dhcp: false
+                ipv6:
+                  enabled: true
+                  address:
+                    - ip: 2001:db8:44::57
+                      prefix-length: 64
+                  dhcp: false
+            routes:
+              config:
+              - destination: [::/0]
+                next-hop-address: [2001:db8:44::1]
+                next-hop-interface: eno4
+                table-id: 254
+            dns-resolver:
+              config:
+               search:
+                - vcu.nokia.bos2.lab
+                server:
+                - 2001:db8:44::53
+
+      - hostName: worker2.vcu.nokia.bos2.lab
+        role: "worker"
+        bmcAddress: "idrac-redfish+https://192.168.44.158/redfish/v1/Systems/System.Embedded.1"
+        bmcCredentialsName:
+          name: "vcu-worker2-bmc-secret"
+          bootMACAddress: "10:70:FD:A4:51:93"
+        bootMode: "UEFI"
+        rootDeviceHints:
+                #hctl: "1:2:0:0"
+          deviceName: /dev/sda
+#        cpuset: "0,24,1,25,2,26,3,27"
+        nodeNetwork:
+          config:
+            interfaces:
+              - name: eno4
+                macAddress: "10:70:FD:A4:51:93"
+                type: ethernet
+                state: up
+                ipv4:
+                  enabled: false
+                  dhcp: false
+                ipv6:
+                  enabled: true
+                  address:
+                    - ip: 2001:db8:44::58
+                      prefix-length: 64
+                  dhcp: false
+            routes:
+              config:
+              - destination: [::/0]
+                next-hop-address: [2001:db8:44::1]
+                next-hop-interface: eno4
+                table-id: 254
+            dns-resolver:
+              config:
+                search:
+                - vcu.nokia.bos2.lab
+                server:
+                - 2001:db8:44::53

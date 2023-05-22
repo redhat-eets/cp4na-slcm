@@ -1,0 +1,24 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+#vcu
+#- cloudranvcu-namespace.yaml
+#- cloudranvcu-pull-secret.yaml
+#- cloudranvcu-master1-bmc-secret.yaml
+#- cloudranvcu-master2-bmc-secret.yaml
+#- cloudranvcu-master3-bmc-secret.yaml
+#- cloudranvcu-worker1-bmc-secret.yaml
+#- cloudranvcu-worker2-bmc-secret.yaml
+#- cloudranvcu-worker3-bmc-secret.yaml
+
+#sno
+#- cloudransno-site1-bmc-secret.yaml
+#- cloudransno-site1-namespace.yaml
+#- cloudransno-site1-pull-secret.yaml
+
+#- cloudransno-site2-bmc-secret.yaml
+#- cloudransno-site2-namespace.yaml
+#- cloudransno-site2-pull-secret.yaml
+
+

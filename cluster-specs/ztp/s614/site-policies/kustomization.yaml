@@ -1,0 +1,19 @@
+#apiVersion: kustomize.config.k8s.io/v1beta1
+#kind: Kustomization
+
+generators:
+
+##common
+- common-policies/4.12-common.yaml
+
+#sno
+- cluster-specific-policies/cloudransno-site1.yaml
+- cluster-specific-policies/cloudransno-site2.yaml
+
+#vcu
+- cluster-specific-policies/vcu.yaml
+- group-policies/group-vcu.yaml
+- group-policies/group-du-sno.yaml
+
+resources:
+- ns.yaml

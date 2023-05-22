@@ -1,0 +1,6 @@
+TYPE=Ethernet
+NAME=eno12409
+UUID=e1e9a419-2ecc-4b3c-b12e-434db7c13445
+DEVICE=eno12409
+ONBOOT=yes
+BRIDGE=baremetal

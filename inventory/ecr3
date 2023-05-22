@@ -1,0 +1,52 @@
+---
+
+all:
+  vars:
+    testbed: "ecr3"
+    artefact_output_dir: /tmp/test
+
+  children:
+      jumphosts: ## Only one jumphost
+        hosts:
+          jumphost:
+            ansible_connection: local
+      edus:
+        vars:
+          ssh_port: 22
+          ansible_ssh_private_key_file: ~/.ssh/id_rsa_kni
+          ansible_user: core
+          ansible_ssh_extra_args: '-o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no'
+        hosts:
+          cloudransno-site1:
+            hostname: cloudransno-site1
+            bmc_address: 192.168.33.230
+            bmc_user: "{{ vault_bmc_user }}"
+            bmc_password: "{{ vault_bmc_password }}"
+            vendor: dell
+            api: https://api.cloudransno-site1.ecr3.bos2.lab:6443
+
+          cloudransno-site2:
+            hostname: cloudransno-site2
+            bmc_address: 192.168.33.231
+            bmc_user: "{{ vault_bmc_user }}"
+            bmc_password: "{{ vault_bmc_password }}"
+            vendor: dell
+            api: https://api.cloudransno-site2.ecr3.bos2.lab:6443
+  
+          cloudransno-site3:
+            hostname: cloudransno-site3
+            bmc_address: 192.168.33.233
+            bmc_user: "{{ vault_bmc_user }}"
+            bmc_password: "{{ vault_bmc_password }}"
+            vendor: dell
+            api: https://api.cloudransno-site3.ecr3.bos2.lab:6443
+            
+      masters:
+        hosts:
+          master10:
+            hostname: master-10
+          master11:
+            hostname: master-11
+          master12:
+            hostname: master-12
+...

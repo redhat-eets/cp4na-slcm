@@ -1,0 +1,101 @@
+---
+
+all:
+  vars:
+    testbed: "ecr2"
+    artefact_output_dir: /tmp/test
+
+  children:
+      jumphosts: ## Only one jumphost
+        hosts:
+          jumphost:
+            ansible_connection: local
+          dellswitch130:
+            ansible_host: 192.168.33.130
+            ansible_user: "{{ vault_ansible_switch_user }}" 
+            ansible_password: "{{ vault_ansible_switch_pass }}"
+            ansible_connection: ansible.netcommon.network_cli
+            ansible_network_os: dellemc.os10.os10
+          dellswitch131:
+            ansible_host: 192.168.33.131
+            ansible_user: "{{ vault_ansible_switch_user }}" 
+            ansible_password: "{{ vault_ansible_switch_pass }}"
+            ansible_connection: ansible.netcommon.network_cli
+            ansible_network_os: dellemc.os10.os10
+      edus:
+        vars:
+          ssh_port: 22
+          ansible_ssh_private_key_file: ~/.ssh/id_rsa_kni
+          ansible_user: core
+          ansible_ssh_extra_args: '-o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no'
+          ptp_enabled: true
+          spirent_profile: ecr1_template.xml
+        hosts:
+          cloudransno-site1:
+            hostname: cloudransno-site1
+            bmc_address: 192.168.33.230
+            bmc_user: "{{ vault_bmc_user }}"
+            bmc_password: "{{ vault_bmc_password }}"
+            vendor: dell
+            api: https://api.cloudransno-site1.ecr2.bos2.lab:6443
+            acc100_enabled: true
+            primary_link_interface: "interface ethernet 1/1/2:3"
+            primary_link_ip: 192.168.33.30
+            primary_link_switch: dellswitch130 
+            sriov_link_interface: "interface ethernet 1/1/2:3"
+            sriov_link_ip: 10.10.166.10
+            sriov_link_switch: dellswitch131
+            du_vlan: 160
+            spirent_injection_sriov_vlan: 163
+            ptp_oc_profile: du-slave 
+
+          cloudransno-site2:
+            hostname: cloudransno-site2
+            bmc_address: 192.168.33.231
+            bmc_user: "{{ vault_bmc_user }}"
+            bmc_password: "{{ vault_bmc_password }}"
+            vendor: dell
+            api: https://api.cloudransno-site2.ecr2.bos2.lab:6443 
+            acc100_enabled: false
+            primary_link_interface: "interface ethernet 1/1/2:2"
+            primary_link_ip: 192.168.33.31
+            primary_link_switch: dellswitch130 
+            sriov_link_interface: "interface ethernet 1/1/2:2"
+            sriov_link_ip: 10.10.176.10
+            sriov_link_switch: dellswitch131
+            du_vlan: 170
+            spirent_injection_sriov_vlan: 173
+            ptp_oc_profile: du-slave 
+
+          cloudransno-site3:
+            acc100_enabled: true
+            hostname: cloudransno-site3
+            bmc_address: 192.168.33.232
+            bmc_user: "{{ vault_bmc_user }}"
+            bmc_password: "{{ vault_bmc_password }}"
+            vendor: dell
+            api: https://api.cloudransno-site3.ecr2.bos2.lab:6443
+            acc100_enabled: true
+            primary_link_interface: "interface ethernet 1/1/2:1"
+            primary_link_ip: 192.168.33.32
+            primary_link_switch: dellswitch130 
+            sriov_link_interface: "interface ethernet 1/1/2:1"
+            sriov_link_ip: 10.10.186.10
+            sriov_link_switch: dellswitch131
+            du_vlan: 180
+            spirent_injection_sriov_vlan: 183
+            ptp_oc_profile: du-slave 
+      spirent:
+        hosts:
+          spirent-vm:
+            hostname: 192.168.67.54 
+            chassis: "192.168.49.180"
+      masters:
+        hosts:
+          master0:
+            hostname: master-0
+          master1:
+            hostname: master-1
+          master2:
+            hostname: master-2
+...

@@ -1,0 +1,6 @@
+TYPE=Ethernet
+NAME=eno12399
+UUID=1a5a386d-d485-480a-a65a-ee634580f75c
+DEVICE=eno12399
+ONBOOT=yes
+BRIDGE=provisioning

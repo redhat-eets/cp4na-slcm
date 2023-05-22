@@ -1,0 +1,97 @@
+domain-needed
+#bind-dynamic
+bogus-priv
+domain=ecr1.bos2.lab
+listen-address=127.0.0.1,192.168.32.40
+expand-hosts
+
+#strict-order
+#dhcp-authoritative
+#dhcp-fqdn
+#log-queries
+#log-dhcp
+
+#server=192.168.254.21
+#server=192.168.254.20
+server=1.1.1.1
+server=8.8.8.8
+server=192.168.32.40
+
+dhcp-range=192.168.32.55,192.168.32.126
+dhcp-option= option:netmask,255.255.255.128
+dhcp-option= option:router,192.168.32.1
+dhcp-option= option:dns-server,192.168.32.40
+dhcp-option= option:domain-search,cloudranmgmt.ecr1.bos2.lab
+
+dhcp-range= tag:cloudran,192.168.32.41,192.168.32.50
+#dhcp-range=10.0.1.4,10.0.14
+dhcp-option= tag:cloudran,option:netmask,255.255.255.128
+dhcp-option= tag:cloudran,option:router,192.168.32.1
+dhcp-option= tag:cloudran,option:dns-server,192.168.32.40
+dhcp-option= tag:cloudran,option:domain-search,cloudranmgmt.ecr1.bos2.lab
+#dhcp-option=3,<baremetal-net-gateway-ip>
+#dhcp-option=3,10.0.1.254
+#resolv-file=/etc/resolv.conf.upstream
+interface=baremetal
+#interface=em2
+
+
+#Wildcard for apps and other api domains
+address=/.apps.cloudranmgmt.ecr1.bos2.lab/192.168.32.49
+address=/api.cloudranmgmt.ecr1.bos2.lab/192.168.32.48
+address=/api-int.cloudranmgmt.ecr1.bos2.lab/192.168.32.48
+
+
+# Static IPs for Masters
+# master-0
+dhcp-host=B4:96:91:BA:AE:71,192.168.32.41,master-0.cloudranmgmt.ecr1.bos2.lab, set:cloudran
+address=/master-0.cloudranmgmt.ecr1.bos2.lab/192.168.32.41
+ptr-record=41.32.168.192.in-addr.arpa,master-0.cloudranmgmt.ecr1.bos2.lab
+
+# master-1
+dhcp-host=B4:96:91:BA:1B:3D,192.168.32.42,master-1.cloudranmgmt.ecr1.bos2.lab, set:cloudran
+address=/master-1.cloudranmgmt.ecr1.bos2.lab/192.168.32.42
+ptr-record=42.32.168.192.in-addr.arpa,master-1.cloudranmgmt.ecr1.bos2.lab
+
+# master-2
+dhcp-host=B4:96:91:B4:C2:95,192.168.32.43,master-2.cloudranmgmt.ecr1.bos2.lab, set:cloudran
+address=/master-2.cloudranmgmt.ecr1.bos2.lab/192.168.32.43
+ptr-record=43.32.168.192.in-addr.arpa,master-2.cloudranmgmt.ecr1.bos2.lab
+
+## master-3
+dhcp-host=B4:96:91:B4:C1:4D,192.168.32.37,master-3.cloudranmgmt.ecr1.bos2.lab, set:cloudran
+address=/master-3.cloudranmgmt.ecr1.bos2.lab/192.168.32.37
+ptr-record=37.32.168.192.in-addr.arpa,master-3.cloudranmgmt.ecr1.bos2.lab
+
+
+## master-4
+dhcp-host=B4:96:91:B4:C2:21,192.168.32.38,master-4.cloudranmgmt.ecr1.bos2.lab, set:cloudran
+address=/master-4.cloudranmgmt.ecr1.bos2.lab/192.168.32.38
+ptr-record=38.32.168.192.in-addr.arpa,master-4.cloudranmgmt.ecr1.bos2.lab
+
+
+## master-5
+dhcp-host=B4:96:91:BA:16:33,192.168.32.39,master-5.cloudranmgmt.ecr1.bos2.lab, set:cloudran
+address=/master-5.cloudranmgmt.ecr1.bos2.lab/192.168.32.39
+ptr-record=39.32.168.192.in-addr.arpa,master-5.cloudranmgmt.ecr1.bos2.lab
+
+#SNO
+
+#address=/api.sno232ztp.ecr1.bos2.lab/192.168.32.121
+#address=/*.api.sno232ztp.ecr1.bos2.lab/192.168.32.121
+#ptr-record=121.32.168.192.in-addr.arpa,sno232ztp.ecr1.bos2.lab
+
+#SNO1
+
+#address=/api.cloudransno231ztp.ecr1.bos2.lab/192.168.32.110
+#address=/*.api.cloudransno231ztp.ecr1.bos2.lab/192.168.32.110
+#ptr-record=110.32.168.192.in-addr.arpa,cloudransno231ztp.ecr1.bos2.lab
+
+#SNO3
+
+#address=/api.cloudransno230ztp.ecr1.bos2.lab/192.168.32.120
+#address=/*.api.cloudransno230ztp.ecr1.bos2.lab/192.168.32.120
+#ptr-record=120.32.168.192.in-addr.arpa,cloudransno230ztp.ecr1.bos2.lab
+
+
+
